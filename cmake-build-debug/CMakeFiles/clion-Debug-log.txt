@@ -1,0 +1,4 @@
+/home/bartek/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/bartek/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/bin/ninja/linux/x64/ninja -G Ninja -S /home/bartek/CLionProjects/ChessGame -B /home/bartek/CLionProjects/ChessGame/cmake-build-debug
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/bartek/CLionProjects/ChessGame/cmake-build-debug

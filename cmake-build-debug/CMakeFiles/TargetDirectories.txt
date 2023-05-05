@@ -1,0 +1,3 @@
+/home/bartek/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/ChessGame.dir
+/home/bartek/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/bartek/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/rebuild_cache.dir

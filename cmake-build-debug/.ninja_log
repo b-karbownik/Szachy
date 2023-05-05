@@ -1,0 +1,22 @@
+# ninja log v5
+2	620	1682515743255902662	CMakeFiles/SDL2Test.dir/src/Board.cpp.o	4690cad1434a3ff0
+3	38	1683275745498077135	CMakeFiles/ChessGame.dir/src/Queen.cpp.o	2379b046bb468618
+4	23	1683275949320585493	CMakeFiles/ChessGame.dir/src/Knight.cpp.o	d648c1c23f72f4d7
+0	36	1682594166905931298	build.ninja	e74e14acdb82e2b4
+1	654	1683275746114239228	CMakeFiles/ChessGame.dir/Main.cpp.o	6e40488f355797a0
+3	650	1683275949948596104	CMakeFiles/ChessGame.dir/src/Board.cpp.o	ba7b0c29f6fc2eeb
+43	171	1682593214680534214	SDL2Test	fabdf0aaec6b2257
+2	859	1683275746318292575	CMakeFiles/ChessGame.dir/src/Game.cpp.o	fd58d055c4bc3e1f
+2	574	1682515743211903230	CMakeFiles/SDL2Test.dir/Main.cpp.o	3cac5dcc41e4bebe
+1	16	1682451507537584569	CMakeFiles/SDL2Test.dir/src/Piece.cpp.o	1751905e1a379a20
+1	620	1682515850422505358	CMakeFiles/SDL2Test.dir/src/Game.cpp.o	17969f7038605089
+1	23	1683275963692906429	CMakeFiles/ChessGame.dir/src/Piece.cpp.o	980cbcb3b288b652
+4	23	1683275949316585425	CMakeFiles/ChessGame.dir/src/Rook.cpp.o	ba0ce09ab1a5050b
+2	25	1683278104522258915	CMakeFiles/ChessGame.dir/src/Pawn.cpp.o	1f1a54ce6fea325d
+3	24	1682595877454822512	CMakeFiles/ChessGame.dir/src/Bishop.cpp.o	ddc002f161a22e1d
+1	43	1682593214552531135	CMakeFiles/SDL2Test.dir/src/Pawn.cpp.o	1582f7366c4e6560
+5	23	1683275949320585493	CMakeFiles/ChessGame.dir/src/King.cpp.o	e61a3b79f6213167
+23	226	1683275963892911943	ChessGame	1c29bc0d25d27a48
+1	660	1683278110870436801	CMakeFiles/ChessGame.dir/src/Board.cpp.o	ba7b0c29f6fc2eeb
+1	24	1683278121830747335	CMakeFiles/ChessGame.dir/src/Pawn.cpp.o	1f1a54ce6fea325d
+24	149	1683278121958750985	ChessGame	1c29bc0d25d27a48
