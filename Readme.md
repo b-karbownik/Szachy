@@ -1,8 +1,9 @@
 Implementacja gry w szachy stworzona jako projekt zaliczeniowy jednego z przedmiotów na Uniwersytecie. Program napisany w języku C++ z użyciem biblioteki SDL2.
 
 # Prezentacja
-![chess1](https://github.com/b-karbownik/Szachy/assets/127301057/71ca88b1-e874-44c5-8b23-5882a08d1b86)
-![chess2](https://github.com/b-karbownik/Szachy/assets/127301057/9c05391c-32e8-4fee-9d0b-be06ef5c77e7)
+![chess2](https://github.com/b-karbownik/Szachy/assets/127301057/86d4f4f8-6859-4e6a-9797-27b68011aa05)
+![chess1](https://github.com/b-karbownik/Szachy/assets/127301057/6968f76b-527c-46f1-9b20-3352917f0f65)
+entacja
 
 # TODO
  * Wyodrębnić klasę SDL_Handler
