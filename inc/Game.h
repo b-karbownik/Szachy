@@ -13,11 +13,17 @@ class Game {
     SDL_Renderer *renderer;
     Board board;
     bool isWhiteTurn;
+    bool firstClick{};
+    int firstClickX;
+    int firstClickY;
+    bool isPromotionNow;
+    pieceType promotionChoose;
 public:
     const int SCREEN_HEIGHT = 800;
     const int SCREEN_WIDTH = 800;
     const int PIECE_WIDTH = SCREEN_WIDTH / 8;
     const int PIECE_HEIGHT = SCREEN_HEIGHT / 8;
+
     Game();
 
     ~Game();
@@ -26,13 +32,40 @@ public:
 
     void drawBoard();
 
+    bool isValidMove(int startX, int startY, int endX, int endY);
+
     void drawPieces();
 
-    void update();
-    bool isWindowOpen();
-    void handleMouseEvent();
-    void redrawPieces();
-};
+    bool isOnPath(int startX, int startY, int endX, int endY);
 
+    void renderPossibleMoves(int startX, int startY);
+
+
+    void update();
+
+    bool isInCheck(pieceColor kingColor);
+
+    bool isMoveBlockingCheck(int startX, int startY, int endX, int endY);
+
+    bool isCheckMate();
+
+    void handleMouseEvent();
+
+    void handleFirstClick(int boardPosX, int boardPosY);
+
+    bool isCastlingPossible(int startX, int startY, int endX, int endY);
+
+    void handleSecondClick(int boardPosX, int boardPosY);
+
+    void handleCastling(int kingStartX, int kingStartY, int kingEndX, int kingEndY, int rookStartX, int rookStartY,
+                        int rookEndX, int rookEndY);
+
+    void drawThickRectangle(int thickness, int x, int y);
+
+    void pawnPromotion(pieceColor color,pieceType type, int positionX, int positionY);
+    void pawnPromotionGUI(pieceColor color);
+    void handlePromotion();
+
+};
 
 #endif //CHESSGAME_GAME_H

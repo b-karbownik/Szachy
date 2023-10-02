@@ -1,25 +1,43 @@
-//
-// Created by Bartek on 21.04.2023.
-//
-
 #include "Piece.h"
 
+Piece::Piece() {
+}
+
+Piece::~Piece() {
+}
+
 int Piece::getPositionX() {
-    return this->positionX;
+    return positionX;
 }
 
 int Piece::getPositionY() {
-    return this->positionY;
+    return positionY;
 }
 
-pieceName Piece::getName(){
-    return this->name;
+pieceType Piece::getType() {
+    return type;
 }
 
-bool Piece::isMovePossible(int positionX, int positionY) {
-    return false;
+bool Piece::getHasMoved() {
+    return hasMoved;
 }
 
-bool Piece::getColor(){
-    return this->color;
+void Piece::setHasMoved() {
+    this->hasMoved=true;
+}
+
+void Piece::setPositionX(int positionX) {
+    this->positionX=positionX;
+}
+void Piece::setPositionY(int positionY) {
+    this->positionY=positionY;
+}
+
+pieceColor Piece::getColor() {
+    return color;
+}
+
+bool Piece::isMovePossible(int finalPositionX, int finalPositionY) {
+
+        return false;
 }

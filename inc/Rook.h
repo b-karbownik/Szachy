@@ -1,19 +1,17 @@
 //
-// Created by bartek on 27.04.23.
+// Created by bartek on 06.05.23.
 //
 
-#ifndef SDL2TEST_ROOK_H
-#define SDL2TEST_ROOK_H
+#ifndef CHESSGAME_ROOK_H
+#define CHESSGAME_ROOK_H
 #include "Piece.h"
 
-class Rook : Piece{
+class Rook : public Piece{
 private:
-    bool hasMoved;
 public:
-    Rook();
-    ~Rook();
-
+    bool isMovePossible(int finalPositionX, int finalPositionY) override;
+    Rook(pieceType type, pieceColor color, int positionX, int positionY);
 };
 
 
-#endif //SDL2TEST_ROOK_H
+#endif //CHESSGAME_ROOK_H

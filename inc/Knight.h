@@ -1,19 +1,18 @@
 //
-// Created by bartek on 27.04.23.
+// Created by bartek on 06.05.23.
 //
 
-#ifndef SDL2TEST_KNIGHT_H
-#define SDL2TEST_KNIGHT_H
+#ifndef CHESSGAME_KNIGHT_H
+#define CHESSGAME_KNIGHT_H
+
 #include "Piece.h"
 
-class Knight : Piece{
-private:
+class Knight : public Piece{
 public:
-    Knight();
-    ~Knight();
-    bool isMovePossible(int posiitonX, int PositionY) override;
+    Knight(pieceType type, pieceColor color, int positionX, int positionY);
+    bool isMovePossible(int finalPositionX, int finalPositionY)override;
 
 };
 
 
-#endif //SDL2TEST_KNIGHT_H
+#endif //CHESSGAME_KNIGHT_H

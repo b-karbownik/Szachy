@@ -1,14 +1,18 @@
 //
-// Created by bartek on 27.04.23.
+// Created by bartek on 06.05.23.
 //
 
-#ifndef SDL2TEST_BISHOP_H
-#define SDL2TEST_BISHOP_H
+#ifndef CHESSGAME_BISHOP_H
+#define CHESSGAME_BISHOP_H
 
+#include "Piece.h"
 
-class Bishop {
+class Bishop : public Piece {
+public:
+    Bishop(pieceType type, pieceColor color, int positionX, int positionY);
 
+    bool isMovePossible(int finalPositionX, int finalPositionY) override;
 };
 
 
-#endif //SDL2TEST_BISHOP_H
+#endif //CHESSGAME_BISHOP_H

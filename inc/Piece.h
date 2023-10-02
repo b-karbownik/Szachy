@@ -5,24 +5,34 @@
 #ifndef CHESSGAME_PIECE_H
 #define CHESSGAME_PIECE_H
 
-enum pieceName{Pawn,Knight,Rook,Bishop,King,Queen};
-enum pieceColor{White,Black};
+enum pieceType {
+    PAWN, KNIGHT, ROOK, BISHOP, KING, QUEEN
+};
+
+enum pieceColor {
+    WHITE, BLACK
+};
+
 class Piece {
 protected:
-    pieceName name;
+    pieceType type;
     pieceColor color;
     int positionX;
     int positionY;
+    bool hasMoved;
+
 public:
     Piece();
     virtual ~Piece();
     int getPositionX();
+    void setPositionX(int positionX);
+    void setPositionY(int positionY);
     int getPositionY();
-    pieceName getName();
-    bool getColor();
-    virtual bool isMovePossible(int positionX, int positionY);
-
+    pieceType getType();
+    pieceColor getColor();
+    bool getHasMoved();
+    void setHasMoved();
+    virtual bool isMovePossible(int finalPositionX, int finalPositionY);
 };
 
-
-#endif //CHESSGAME_PIECE_H
+#endif // CHESSGAME_PIECE_H

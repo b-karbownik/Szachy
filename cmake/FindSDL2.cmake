@@ -11,7 +11,7 @@
 #
 # ::
 #
-#   SDL2_LIBRARY, the name of the library to link against
+#   SDL2_LIBRARY, the type of the library to link against
 #   SDL2_FOUND, if false, do not try to link to SDL
 #   SDL2_INCLUDE_DIR, where to find SDL.h
 #   SDL2_VERSION_STRING, human-readable string containing the version of SDL

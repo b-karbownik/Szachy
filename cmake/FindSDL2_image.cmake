@@ -11,7 +11,7 @@
 #
 # ::
 #
-#   SDL2_IMAGE_LIBRARIES, the name of the library to link against
+#   SDL2_IMAGE_LIBRARIES, the type of the library to link against
 #   SDL2_IMAGE_INCLUDE_DIRS, where to find the headers
 #   SDL2_IMAGE_FOUND, if false, do not try to link against
 #   SDL2_IMAGE_VERSION_STRING - human-readable string containing the

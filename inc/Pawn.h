@@ -1,19 +1,17 @@
 //
-// Created by Bartek on 21.04.2023.
+// Created by bartek on 06.05.23.
 //
 
 #ifndef CHESSGAME_PAWN_H
 #define CHESSGAME_PAWN_H
+
 #include "Piece.h"
 
-
-class Pawn : Piece {
+class Pawn : public Piece{
 private:
-    bool hasMoved;
 public:
-    Pawn(pieceName name, pieceColor color,int positionX, int positionY);
-    ~Pawn();
-    bool isMovePossible(int positionX, int positionY) override;
+    bool isMovePossible(int finalPositionX, int finalPositionY)override;
+    Pawn(pieceType type, pieceColor color, int positionX, int positionY);
 };
 
 

@@ -1,19 +1,19 @@
 //
-// Created by bartek on 27.04.23.
+// Created by bartek on 06.05.23.
 //
 
-#ifndef SDL2TEST_KING_H
-#define SDL2TEST_KING_H
-#include "Piece.h"
+#ifndef CHESSGAME_KING_H
+#define CHESSGAME_KING_H
 
-class King : Piece {
+#include "Piece.h"
+class King : public Piece{
 private:
-    bool hasMoved;
 public:
-    King();
-    ~King();
+    King(pieceType type, pieceColor color, int positionX, int positionY);
+    bool isMovePossible(int finalPositionX, int finalPositionY)override;
+
 
 };
 
 
-#endif //SDL2TEST_KING_H
+#endif //CHESSGAME_KING_H
