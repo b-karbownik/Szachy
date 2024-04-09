@@ -1,48 +1,34 @@
-//
-// Created by Bartek on 21.04.2023.
-//
 #include <iostream>
 #include "Game.h"
 #include "Board.h"
 #include <SDL.h>
-#include "SDL_image.h"
 #include "Queen.h"
 #include "Bishop.h"
 #include "Rook.h"
 #include "Knight.h"
+#include "SDLHandler.h"
+#include "King.h"
 
-Game::Game() {
+
+Game::Game() : window(nullptr), renderer(nullptr), sdlHandler(nullptr) {
     window = SDL_CreateWindow("Szachy", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    Board board;
+    sdlHandler = new SDLHandler(renderer);
+    board = Board();
     isWhiteTurn = true;
     firstClickX = 0;
     firstClickY = 0;
     isPromotionNow = false;
     promotionChoose = PAWN;
+
+
 }
 
 Game::~Game() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-}
-
-void Game::drawBoard() {
-
-    SDL_Color whiteSquare = {250, 235, 215, 0};
-    SDL_Color blackSquare = {244, 164, 96, 0};
-    for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-            SDL_Rect field = {x * SCREEN_WIDTH / 8, y * SCREEN_HEIGHT / 8, SCREEN_WIDTH / 8, SCREEN_HEIGHT / 8};
-            if ((x + y) % 2 == 0) {
-                SDL_SetRenderDrawColor(renderer, whiteSquare.r, whiteSquare.g, whiteSquare.b, whiteSquare.a);
-            } else {
-                SDL_SetRenderDrawColor(renderer, blackSquare.r, blackSquare.g, blackSquare.b, blackSquare.a);
-            }
-            SDL_RenderFillRect(renderer, &field);
-        }
-    }
+    delete sdlHandler;
 }
 
 
@@ -52,70 +38,24 @@ void Game::drawPieces() {
         for (int y = 0; y <= 7; y++) {
             int xPosition = x * PIECE_WIDTH;
             int yPosition = y * PIECE_HEIGHT;
-            SDL_Rect destRect = {xPosition, yPosition, PIECE_WIDTH, PIECE_HEIGHT};
-            SDL_Surface *image = nullptr;
             if (board.boardOfPieces[x][y] != nullptr) {
-                switch (board.boardOfPieces[x][y]->getType()) {
-
-                    case PAWN:
-                        if (board.boardOfPieces[x][y]->getColor() == WHITE) {
-                            image = IMG_Load("wp.png");
-                        } else {
-                            image = IMG_Load("bp.png");
-                        }
-                        break;
-                    case KNIGHT:
-                        if (board.boardOfPieces[x][y]->getColor() == WHITE) {
-                            image = IMG_Load("wn.png");
-                        } else {
-                            image = IMG_Load("bn.png");
-                        }
-                        break;
-                    case ROOK:
-                        if (board.boardOfPieces[x][y]->getColor() == WHITE) {
-                            image = IMG_Load("wr.png");
-                        } else {
-                            image = IMG_Load("br.png");
-                        }
-                        break;
-                    case BISHOP:
-                        if (board.boardOfPieces[x][y]->getColor() == WHITE) {
-                            image = IMG_Load("wb.png");
-                        } else {
-                            image = IMG_Load("bb.png");
-                        }
-                        break;
-                    case KING:
-                        if (board.boardOfPieces[x][y]->getColor() == WHITE) {
-                            image = IMG_Load("wk.png");
-                        } else {
-                            image = IMG_Load("bk.png");
-                        }
-                        break;
-                    case QUEEN:
-                        if (board.boardOfPieces[x][y]->getColor() == WHITE) {
-                            image = IMG_Load("wq.png");
-                        } else {
-                            image = IMG_Load("bq.png");
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                sdlHandler->drawPiece(board.boardOfPieces[x][y]->getColor(),
+                                      board.boardOfPieces[x][y]->getType(),
+                                      xPosition,
+                                      yPosition);
             }
-            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
-            if (texture != nullptr) {
-                SDL_RenderCopy(renderer, texture, nullptr, &destRect);
-                SDL_RenderPresent(renderer);
-                SDL_DestroyTexture(texture); // Destroy the texture
-            }
-            SDL_FreeSurface(image);
         }
     }
 }
 
 void Game::update() {
-    drawBoard();
+    sdlHandler->drawBoard();
+//    for (auto piece: *pieces) {
+//        sdlHandler->drawPiece(piece.getColor(),
+//                              piece.getType(),
+//                              piece.getPositionX(),
+//                              piece.getPositionY());
+//    }
     drawPieces();
 }
 
@@ -154,9 +94,8 @@ void Game::handleFirstClick(int boardPosX, int boardPosY) {
 
 void Game::handleSecondClick(int boardPosX, int boardPosY) {
     if (board.isFieldEmpty(firstClickX, firstClickY)) {
-        update();
-        firstClick = true;
-        return;
+//        firstClick = true;
+//        return;
     } else {
         Piece *piece = board.boardOfPieces[firstClickX][firstClickY];
         if (piece->getColor() == (isWhiteTurn ? WHITE : BLACK)) {
@@ -216,11 +155,11 @@ void Game::handleSecondClick(int boardPosX, int boardPosY) {
     }
     if (isCheckMate()) {
         update();
-        std::cout << "Szach i Mat. Wygrywa:"<<std::endl;
-        if(isWhiteTurn){
-            std::cout<<"Czarny"<<std::endl;
-        }else{
-            std::cout<<"Biały"<<std::endl;
+        std::cout << "Szach i Mat. Wygrywa:" << std::endl;
+        if (isWhiteTurn) {
+            std::cout << "Czarny" << std::endl;
+        } else {
+            std::cout << "Biały" << std::endl;
         }
         SDL_Delay(5000);
         SDL_Quit();
@@ -311,8 +250,7 @@ bool Game::isOnPath(int startX, int startY, int endX, int endY) {
 
 void Game::renderPossibleMoves(int startX, int startY) {
     Piece *piece = board.boardOfPieces[startX][startY];
-    drawThickRectangle(1, startX, startY);
-
+    sdlHandler->drawThickRectangle(1, startX, startY);
     if (piece != nullptr) {
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -323,10 +261,10 @@ void Game::renderPossibleMoves(int startX, int startY) {
 
                     if (isInCheck(kingColor)) {
                         if (!isMoveBlockingCheck(startX, startY, x, y)) {
-                            drawThickRectangle(3, x, y);
+                            sdlHandler->drawThickRectangle(3, x, y);
                         }
                     } else {
-                        drawThickRectangle(3, x, y);
+                        sdlHandler->drawThickRectangle(3, x, y);
                     }
                 }
             }
@@ -334,24 +272,6 @@ void Game::renderPossibleMoves(int startX, int startY) {
     }
 
     SDL_RenderPresent(renderer);
-}
-
-
-void Game::drawThickRectangle(int thickness, int x, int y) {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_Rect rect = {x * PIECE_WIDTH, y * PIECE_HEIGHT, PIECE_WIDTH, PIECE_HEIGHT};
-    if (thickness == 1) {
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-        SDL_RenderDrawRect(renderer, &rect);
-    } else {
-        for (int i = 0; i < thickness; i++) {
-            SDL_RenderDrawRect(renderer, &rect);
-            rect.x++;
-            rect.y++;
-            rect.w -= 2;
-            rect.h -= 2;
-        }
-    }
 }
 
 bool Game::isCastlingPossible(int startX, int startY, int endX, int endY) {
@@ -468,52 +388,6 @@ void Game::pawnPromotion(pieceColor color, pieceType type, int positionX, int po
     }
 }
 
-void Game::pawnPromotionGUI(pieceColor color) {
-    SDL_SetRenderDrawColor(renderer, 205, 81, 81, 255);
-    int buttonW = 100;
-    int buttonH = 100;
-    int buttonPositions[4] = {
-            200, 300, 400, 500
-    };
-    std::string paths[4]{
-            "n.png",
-            "b.png",
-            "r.png",
-            "q.png"
-
-    };
-    SDL_Surface *image = nullptr;
-    for (int i = 0; i < 4; i++) {
-        switch (color) {
-            case WHITE: {
-                std::string path = "w" + paths[i];
-                image = IMG_Load(path.c_str());
-
-                break;
-            }
-            case BLACK: {
-                std::string path = "b" + paths[i];
-                image = IMG_Load(path.c_str());
-
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
-
-        SDL_Rect rect = {buttonPositions[i], 0, buttonW, buttonH};
-        SDL_RenderFillRect(renderer, &rect);
-        SDL_RenderCopy(renderer, texture, nullptr, &rect);
-
-
-    }
-    this->isPromotionNow = true;
-    SDL_RenderPresent(renderer);
-
-}
-
 
 bool Game::isMoveBlockingCheck(int startX, int startY, int endX, int endY) {
     Piece *tempPiece = board.boardOfPieces[endX][endY];
@@ -558,7 +432,7 @@ bool Game::isInCheck(pieceColor kingColor) {
 
 
 void Game::init() {
-    drawBoard();
+    sdlHandler->drawBoard();
     drawPieces();
     bool isRunning = true;
     while (isRunning) {
@@ -573,4 +447,13 @@ void Game::init() {
         }
     }
 
+}
+
+bool Game::isFieldEmpty(int x, int y) {
+    for (auto piece: *pieces) {
+        if (piece.getPositionX() == x && piece.getPositionX() == y) {
+            return true;
+        }
+    }
+    return false;
 }
